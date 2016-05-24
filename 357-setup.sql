@@ -1,0 +1,104 @@
+DROP TABLE IF EXISTS Characteres;
+
+DROP TABLE IF EXISTS CurrentItems;
+
+DROP TABLE IF EXISTS CompletedProjects;
+
+DROP TABLE IF EXISTS CompletedTests;
+
+DROP TABLE IF EXISTS Rooms;
+
+
+
+DROP TABLE IF EXISTS Projects;
+
+DROP TABLE IF EXISTS Items;
+
+DROP TABLE IF EXISTS Health;
+
+DROP TABLE IF EXISTS Tests;
+
+
+
+CREATE TABLE Tests (
+	id INT,
+	score INT,
+	healthEffect INT,
+	CONSTRAINT T_PK PRIMARY KEY (id, score),
+	CONSTRAINT T_UNIQUE UNIQUE(id, score, healthEffect)
+);
+
+CREATE TABLE Health (
+	percent INT,
+	meaning VARCHAR(128),
+	CONSTRAINT H_PK PRIMARY KEY(percent),
+	CONSTRAINT H_UNIQUE UNIQUE (meaning)
+);
+
+CREATE TABLE Items (
+	id INT,
+	name VARCHAR(32),
+	message VARCHAR(256),
+	CONSTRAINT I_PK PRIMARY KEY (id),
+	CONSTRAINT I_UNIQUE UNIQUE(name)
+);
+
+CREATE TABLE Projects(
+	id INT,
+	name VARCHAR(32),
+	message VARCHAR(256),
+	item1 INT,
+	item2 INT,
+	score INT,
+	healthEffect INT,
+	CONSTRAINT P_PK PRIMARY KEY(id, score),
+	CONSTRAINT P_UNIQUE UNIQUE(score, healthEffect, id)
+);
+
+CREATE TABLE Rooms (
+	id INT,
+	pass1 INT,
+	pass2 INT,
+	pass3 INT,
+	itemID INT,
+	projectID INT,
+	CONSTRAINT R_PK PRIMARY KEY(id),
+	CONSTRAINT R_UNIQUE UNIQUE(pass1, pass2, pass3, itemID, projectID),
+	CONSTRAINT R_FK_I FOREIGN KEY(id) REFERENCES Items(id),
+	CONSTRAINT R_FK_P FOREIGN KEY(id) REFERENCES Projects(id)
+);
+
+
+
+CREATE TABLE CompletedTests (
+	CharId INT,
+	id INT,
+	CONSTRAINT CT_PK PRIMARY KEY (CharId, id),
+	CONSTRAINT CT_FK_T FOREIGN KEY (id) REFERENCES Tests(id)
+);
+
+
+CREATE TABLE CompletedProjects (
+	CharId INT,
+	id INT,
+	CONSTRAINT CP_PK PRIMARY KEY (CharId, id),
+	CONSTRAINT CP_FK_P FOREIGN KEY (id) REFERENCES Projects(id)
+);
+
+CREATE TABLE CurrentItems (
+	CharId INT,
+	id INT,
+	CONSTRAINT CI_PK PRIMARY KEY (CharId, id),
+	CONSTRAINT CI_FK_I FOREIGN KEY (id) REFERENCES Items(id)
+);
+
+CREATE TABLE Characters (
+	id INT,
+	name VARCHAR(32),
+	health INT,
+	currentRoom INT,
+	CONSTRAINT C_PK PRIMARY KEY (id),
+	CONSTRAINT C_UNIQUE UNIQUE (name),
+	CONSTRAINT C_FK_H FOREIGN KEY(health) REFERENCES Health(percent),
+	CONSTRAINT C_FK_R FOREIGN KEY(currentRoom) REFERENCES Rooms(id)
+);

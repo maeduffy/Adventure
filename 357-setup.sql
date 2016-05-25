@@ -1,4 +1,6 @@
-DROP TABLE IF EXISTS Characteres;
+DROP TABLE IF EXISTS Leaderboard;
+
+DROP TABLE IF EXISTS Characters;
 
 DROP TABLE IF EXISTS CurrentItems;
 
@@ -6,19 +8,32 @@ DROP TABLE IF EXISTS CompletedProjects;
 
 DROP TABLE IF EXISTS CompletedTests;
 
+DROP TABLE IF EXISTS ProjectItems;
+
+DROP TABLE IF EXISTS Health;
+
 DROP TABLE IF EXISTS Rooms;
-
-
 
 DROP TABLE IF EXISTS Projects;
 
 DROP TABLE IF EXISTS Items;
 
-DROP TABLE IF EXISTS Health;
-
 DROP TABLE IF EXISTS Tests;
 
+DROP TABLE IF EXISTS Questions;
 
+
+
+CREATE TABLE Questions(
+	id INT,
+	test INT,
+	testQuestion INT,
+	question VARCHAR(256),
+	answer VARCHAR(256),
+	CONSTRAINT Q_PK PRIMARY KEY (id),
+	CONSTRAINT Q_UNIQUE1 UNIQUE(test, testQuestion),
+	CONSTRAINT Q_UNIQUE2 UNIQUE(question)
+);
 
 CREATE TABLE Tests (
 	id INT,
@@ -45,14 +60,21 @@ CREATE TABLE Items (
 
 CREATE TABLE Projects(
 	id INT,
+	projectId INT,
 	name VARCHAR(32),
 	message VARCHAR(256),
-	item1 INT,
-	item2 INT,
 	score INT,
 	healthEffect INT,
-	CONSTRAINT P_PK PRIMARY KEY(id, score),
-	CONSTRAINT P_UNIQUE UNIQUE(score, healthEffect, id)
+	CONSTRAINT P_PK PRIMARY KEY(id),
+	CONSTRAINT P_UNIQUE UNIQUE(score, healthEffect, projectId)
+);
+
+CREATE TABLE ProjectItems (
+	id INT,
+	projectID INT,
+	itemID INT,
+	CONSTRAINT PI_PK PRIMARY KEY (id),
+	CONStRAINT PI_UNIQUE UNIQUE(projectID, itemID)
 );
 
 CREATE TABLE Rooms (
@@ -67,7 +89,6 @@ CREATE TABLE Rooms (
 	CONSTRAINT R_FK_I FOREIGN KEY(id) REFERENCES Items(id),
 	CONSTRAINT R_FK_P FOREIGN KEY(id) REFERENCES Projects(id)
 );
-
 
 
 CREATE TABLE CompletedTests (
@@ -101,4 +122,12 @@ CREATE TABLE Characters (
 	CONSTRAINT C_UNIQUE UNIQUE (name),
 	CONSTRAINT C_FK_H FOREIGN KEY(health) REFERENCES Health(percent),
 	CONSTRAINT C_FK_R FOREIGN KEY(currentRoom) REFERENCES Rooms(id)
+);
+
+CREATE TABLE Leaderboard (
+	id INT,
+	charID INT,
+	CONSTRAINT L_PK PRIMARY KEY(id),
+	CONSTRAINT L_UNIQUE UNIQUE (charID),
+	CONSTRAINT L_FK_C FOREIGN KEY(charID) REFERENCES Characters(id)
 );

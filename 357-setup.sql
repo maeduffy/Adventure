@@ -16,6 +16,8 @@ DROP TABLE IF EXISTS Rooms;
 
 DROP TABLE IF EXISTS Projects;
 
+DROP TABLE IF EXISTS Scores;
+
 DROP TABLE IF EXISTS Items;
 
 DROP TABLE IF EXISTS Tests;
@@ -37,10 +39,8 @@ CREATE TABLE Questions(
 
 CREATE TABLE Tests (
 	id INT,
-	score INT,
-	healthEffect INT,
-	CONSTRAINT T_PK PRIMARY KEY (id, score),
-	CONSTRAINT T_UNIQUE UNIQUE(id, score, healthEffect)
+	name VARCHAR(32),
+	CONSTRAINT T_PK PRIMARY KEY (id)
 );
 
 CREATE TABLE Health (
@@ -58,15 +58,17 @@ CREATE TABLE Items (
 	CONSTRAINT I_UNIQUE UNIQUE(name)
 );
 
-CREATE TABLE Projects(
-	id INT,
-	projectId INT,
-	name VARCHAR(32),
-	message VARCHAR(256),
+CREATE TABLE Scores(
 	score INT,
 	healthEffect INT,
-	CONSTRAINT P_PK PRIMARY KEY(id),
-	CONSTRAINT P_UNIQUE UNIQUE(score, healthEffect, projectId)
+	CONSTRAINT S_PK PRIMARY KEY(score)
+);
+
+CREATE TABLE Projects(
+	id INT,
+	name VARCHAR(32),
+	message VARCHAR(256),
+	CONSTRAINT P_PK PRIMARY KEY(id)
 );
 
 CREATE TABLE ProjectItems (
@@ -102,8 +104,10 @@ CREATE TABLE CompletedTests (
 CREATE TABLE CompletedProjects (
 	CharId INT,
 	id INT,
+	score INT,
 	CONSTRAINT CP_PK PRIMARY KEY (CharId, id),
-	CONSTRAINT CP_FK_P FOREIGN KEY (id) REFERENCES Projects(id)
+	CONSTRAINT CP_FK_P FOREIGN KEY (id) REFERENCES Projects(id),
+	CONSTRAINT CP_FK_S FOREIGN KEY (score) REFERENCES Scores(score)
 );
 
 CREATE TABLE CurrentItems (

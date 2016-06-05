@@ -87,9 +87,7 @@ CREATE TABLE Rooms (
 	itemID INT,
 	projectID INT,
 	CONSTRAINT R_PK PRIMARY KEY(id),
-	CONSTRAINT R_UNIQUE UNIQUE(pass1, pass2, pass3, itemID, projectID),
-	CONSTRAINT R_FK_I FOREIGN KEY(id) REFERENCES Items(id),
-	CONSTRAINT R_FK_P FOREIGN KEY(id) REFERENCES Projects(id)
+	CONSTRAINT R_UNIQUE UNIQUE(pass1, pass2, pass3, itemID, projectID)
 );
 
 

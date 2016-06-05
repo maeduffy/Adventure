@@ -116,7 +116,7 @@ CREATE TABLE CurrentItems (
 );
 
 CREATE TABLE Characters (
-	id INT,
+	id INT AUTO_INCREMENT,
 	name VARCHAR(32),
 	health INT,
 	currentRoom INT,

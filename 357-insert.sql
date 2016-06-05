@@ -12,7 +12,7 @@ INSERT INTO Tests VALUES
 INSERT INTO Health VALUES
 (0, "You just died"),
 (5, "You are on the verge of death. Better do better"),
-(90, "That's alright. You are still doing pretty wekk"),
+(90, "That's alright. You are still doing pretty week"),
 (100, "You are killing it. Keep going!");
 
 INSERT INTO Items VALUES

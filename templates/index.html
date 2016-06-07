@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title> CPE 357 Create Your Own Adventure </title>
+   </head>
+   <body>
+      <h1> Welcome to Adventure </h1>
+      <hr/>
+      <h2> Links </h2>
+      <ul>
+      {% if user %}
+         <li> <a href="/begin"> Begin Adventure </a> </li>
+         <li> <a href="/logout"> Logout </a> </li>
+      {% else %}
+         <li> <a href="/login?uri=/"> Login </a> </li>
+         <li> <a href="/signup"> Sign Up </a> </li>
+      {% endif %}
+      </ul>
+   </body>
+</html>

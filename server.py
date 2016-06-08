@@ -3,7 +3,9 @@ import flask_login
 import logging
 import os
 import MySQLdb
+import connector
 
+user = None
 app = flask.Flask(__name__)
 app.secret_key = os.urandom(16).encode('hex')
 login_manager = flask_login.LoginManager()
@@ -16,9 +18,25 @@ db = MySQLdb.connect(host = 'localhost',
                      db = 'final')
 cur = db.cursor()
 
-class User(flask_login.UserMixin):
-   pass
+class User():
+   def __init__(self, username, id):
+      self.username = username
+      self.id = id
 
+   def is_authenticated(self):
+      if self.id != None:
+         return True
+      else:
+         return False
+
+   def is_active(self):
+      return True
+
+   def is_anonymous(self):
+      return True
+
+   def get_id(self):
+      return self.id
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
@@ -29,40 +47,50 @@ def signup():
    if flask.request.method == 'POST':
       name = flask.request.form.get('name')
       try:
-         # replace with connector method once done.
-         data = (name)
-         cur.execute("INSERT INTO Characters "
-          "(id, name, health, currentRoom) VALUES (1, '%s', 0, 0)", data) 
+         connector.addCharacter(name)
 
       except MySQLdb.Error as e:
-         return flask.redirect('/signup?message=Error.')
+         return flask.redirect('/signup?message=Error')
          
       return flask.redirect('/')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
    if flask.request.method == 'GET':
-      return flask.render_template('login.html')
+      return flask.render_template('login.html',
+         message=flask.request.args.get('message'))
    
    # else, if they are already trying to log in
-   username = flask.request.form['username']
-   user = User()
-   # Get a connector python method that checks for Character existence.
-   cur.execute("SELECT * FROM Characters WHERE name = ?", (name))
-   character = cur.fetchone()
+   username = flask.request.form['name']
+   
+   try:
+      # Get a connector python method that checks for Character existence.
+      statement = "SELECT * FROM Characters WHERE name = '%s'" % username
+      cur.execute(statement)
+      db.commit()
+      character = cur.fetchall()
+      # print "Received", character
+   except MySQLdb.Error as e:
+         return flask.redirect('/login?message=Error')
    
    if character == None:
-      return "Bad login"
+      return flask.redirect('/login?message=Error')
 
-   user.id = character[0]
-   user.username = character[1]
+   user = User(character[0][1], character[0][0])
+   print user
+
    flask_login.login_user(user)
-
-   return flask.redirect(flask.url_for('/'))
+   return flask.redirect(flask.url_for('index'))
 
 @app.route('/', methods=['GET'])
 def index():
-   return flask.render_template('index.html')
+   if user != None and user.is_authenticated:
+      print user, user.username, flask_login.current_user.username
+      return flask.render_template('index.html', user=user.username)
+
+   else:
+      print user
+      return flask.render_template('index.html')
       
 @app.route('/begin')
 @flask_login.login_required
@@ -78,38 +106,29 @@ def logout():
 def unauthorized_handler():
    return 'Unauthorized to access.'
 
-#@app.route('/protected', methods=['GET', 'POST']) 
-#@flask_login.login_required
-#def protected():
+# @app.route('/protected', methods=['GET', 'POST']) 
+# @flask_login.login_required
+# def protected():
 #   return "Logged in as: " + flask_login.current_user.username
 
-"""
 @login_manager.user_loader
-def user_loader(user):
-   cur.execute("SELECT id FROM Characters WHERE name = ?", (name))
-   character = cur.fetchone()
-   if character == None:
-      return
-   user = User()
-   user.id = character[0]
-
+def user_loader(userid):
    # identify the user by their Character id
-   return user
+   if user != None:
+      return user.get(user.id)
+   else:
+      return None
 
 @login_manager.request_loader
 def request_loader(request):
-   username = request.form.get('name')
-   cur.execute("SELECT * FROM Characters WHERE name = ?", (username))
-   character = cur.fetchone()
-   if character == None:
-      return
+   # first, try to login using the api_key url arg
+   api_key = request.args.get('api_key')
+   if api_key:
+      user = User.query.filter_by(api_key=api_key).first()
+      if user:
+         return user
 
-   user = User()
-   user.id = character[0]
-
-   # just pretend authentication was defaulted, as long as they existed
-   return user
-"""
+   return None
 
 if __name__ == "__main__":
    app.run(debug=True, port=8000)

@@ -30,8 +30,8 @@ CREATE TABLE Questions(
 	id INT,
 	test INT,
 	testQuestion INT,
-	question VARCHAR(256),
-	answer VARCHAR(256),
+	question VARCHAR(255),
+	answer VARCHAR(255),
 	CONSTRAINT Q_PK PRIMARY KEY (id),
 	CONSTRAINT Q_UNIQUE1 UNIQUE(test, testQuestion),
 	CONSTRAINT Q_UNIQUE2 UNIQUE(question)
@@ -53,7 +53,7 @@ CREATE TABLE Health (
 CREATE TABLE Items (
 	id INT,
 	name VARCHAR(32),
-	message VARCHAR(256),
+	message VARCHAR(255),
 	CONSTRAINT I_PK PRIMARY KEY (id),
 	CONSTRAINT I_UNIQUE UNIQUE(name)
 );
@@ -67,7 +67,7 @@ CREATE TABLE Scores(
 CREATE TABLE Projects(
 	id INT,
 	name VARCHAR(32),
-	message VARCHAR(256),
+	message VARCHAR(255),
 	CONSTRAINT P_PK PRIMARY KEY(id)
 );
 

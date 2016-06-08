@@ -1,5 +1,3 @@
-
-
 INSERT INTO Scores VALUES
 (0, -20),
 (100, 50);
@@ -41,7 +39,7 @@ INSERT INTO ProjectItems VALUES
 (5, 2, 3),
 (6, 3, 6);
 
-INSERT INTO Rooms VALUES
+INSERT INTO Rooms (id, pass1, pass2, pass3, itemID, projectID) VALUES
 (1, 2, 3, 7, 0, 0),
 (2, 1, 10, 14, 0, 0),
 (3, 1, 4, 16, 0, 0),

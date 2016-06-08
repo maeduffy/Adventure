@@ -5,11 +5,15 @@ import os
 import MySQLdb
 import connector
 
+from flask_bootstrap import Bootstrap
+
 user = None
 app = flask.Flask(__name__)
+Bootstrap(app)
 app.secret_key = os.urandom(16).encode('hex')
 login_manager = flask_login.LoginManager()
 login_manager.init_app(app)
+login_manager.login_view = '/login'
 
 logging.basicConfig(level=logging.DEBUG)
 db = MySQLdb.connect(host = 'localhost',
@@ -18,16 +22,14 @@ db = MySQLdb.connect(host = 'localhost',
                      db = 'final')
 cur = db.cursor()
 
-class User():
-   def __init__(self, username, id):
+class User(flask_login.UserMixin):
+   def __init__(self, username, userid):
       self.username = username
-      self.id = id
+      self.userid = userid
 
    def is_authenticated(self):
-      if self.id != None:
-         return True
-      else:
-         return False
+      # print "authenticated?", self, self.userid
+      return True
 
    def is_active(self):
       return True
@@ -36,7 +38,10 @@ class User():
       return True
 
    def get_id(self):
-      return self.id
+      return chr(self.userid)
+
+   def __repr__(self):
+      return '<User %r>' % self.username
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
@@ -52,10 +57,12 @@ def signup():
       except MySQLdb.Error as e:
          return flask.redirect('/signup?message=Error')
          
-      return flask.redirect('/')
+      return flask.redirect(flask.url_for('login'))
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+   global user
+
    if flask.request.method == 'GET':
       return flask.render_template('login.html',
          message=flask.request.args.get('message'))
@@ -77,58 +84,81 @@ def login():
       return flask.redirect('/login?message=Error')
 
    user = User(character[0][1], character[0][0])
-   print user
+   flask_login.login_user(user, remember=True)
 
-   flask_login.login_user(user)
    return flask.redirect(flask.url_for('index'))
 
 @app.route('/', methods=['GET'])
 def index():
-   if user != None and user.is_authenticated:
-      print user, user.username, flask_login.current_user.username
+   if user != None and user.is_authenticated():
       return flask.render_template('index.html', user=user.username)
 
    else:
-      print user
       return flask.render_template('index.html')
       
-@app.route('/begin')
+@app.route('/begin', methods=['GET', 'POST'])
 @flask_login.login_required
 def begin():
-   pass
+   # render the roomId
+   # add passage to the template
+   # add the 3 room travel options
+
+   if request.method == 'GET':
+      if user != None:
+         # pray we know what our current room id is!
+         return flask.render_template('begin.html',
+            user=user.username,
+            room1=None,
+            room2=None,
+            room3=None,
+            button1=None, 
+            button2=None,
+            button3=None,
+            )
+
+   # on mouse click, get the result & reselect rooms
+   if request.method == 'POST':
+      if user != None:
+         name = flask.request.form.get('submit')
+         # above will get the room value of the room id.
+         # add any items that the current room has to current items
+         # set roomid as current room
+
+   else:
+      return flask.render_template('begin.html')
    
 @app.route('/logout')
 def logout():
    flask_login.logout_user()
+   # eventually, we'll get this to a template.
    return 'Bye! You have been logged out.'
 
 @login_manager.unauthorized_handler
 def unauthorized_handler():
    return 'Unauthorized to access.'
 
-# @app.route('/protected', methods=['GET', 'POST']) 
-# @flask_login.login_required
-# def protected():
-#   return "Logged in as: " + flask_login.current_user.username
-
 @login_manager.user_loader
 def user_loader(userid):
    # identify the user by their Character id
-   if user != None:
-      return user.get(user.id)
-   else:
-      return None
+   return user
 
 @login_manager.request_loader
 def request_loader(request):
    # first, try to login using the api_key url arg
-   api_key = request.args.get('api_key')
-   if api_key:
-      user = User.query.filter_by(api_key=api_key).first()
-      if user:
-         return user
+
+   # print '\n', 'HOW DID WE GET HERE.', '\n'
+   # api_key = request.args.get('api_key')
+   # if api_key:
+   #    user = User.query.filter_by(api_key=api_key).first()
+   #    if user:
+   #       return user
 
    return None
+
+# @app.route('/protected', methods=['GET', 'POST']) 
+# @flask_login.login_required
+# def protected():
+#   return "Logged in as: " + flask_login.current_user.username
 
 if __name__ == "__main__":
    app.run(debug=True, port=8000)

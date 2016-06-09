@@ -52,3 +52,7 @@ def checkTestComplete(char, test):
 def setTestComplete(char, test, score):
 	cur.execute("INSERT INTO CompletedTests VALUES(%s, %d, %d)", (char, test, score))
 	db.commit()
+
+def getRoom(charId):
+	cur.execute("SELECT currentRoom FROM Characters WHERE id = %d", (charId))
+	return cur.fetchall() 

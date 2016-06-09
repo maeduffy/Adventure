@@ -4,15 +4,13 @@ from sys import stdin
 
 #db = MySQLdb.connect(host = "csc-db0", user = "cpew", passwd = "FunToPassHa7", db = "cpew")
 
-db = MySQLdb.connect(host = 'localhost',
-                     user = 'root',
-                    	passwd = '123',
-                   	db = 'final')
+# Michelle's local credentials. Modify if running it for yourself!
+db = MySQLdb.connect(host = 'localhost', user = 'root', passwd = '123', db = 'final')
 
 cur = db.cursor()
 
 def addCharacter(name):
-	cur.execute("""INSERT INTO Characters VALUES (NULL, '%s', 100, 1)""", (name,))
+	cur.execute("""INSERT INTO Characters VALUES (NULL, %s, 100, 1)""", (name,))
 	db.commit()
 
 def charExists(name):
@@ -32,7 +30,7 @@ def addCurrentItem(char, item):
 	db.commit()
 
 def checkProjectComplete(char, project):
-	cur.execute("""SELECT COUNT(*) FROM CompletedProjects WHERE CharId = '%s' AND id = %d""", (char, project))
+	cur.execute("""SELECT COUNT(*) FROM CompletedProjects WHERE CharId = '%s' AND id = %s""", (char, project))
 	db.commit()
 	return cur.fetchall()
 
@@ -55,34 +53,34 @@ def getRoom(charId):
 	return cur.fetchall() 
 
 def setRoom(charId, roomId):
-	cur.execute("""UPDATE Characters SET currentRoom = %d WHERE id = %d""", (roomId, charId))
+	cur.execute("""UPDATE Characters SET currentRoom = %s WHERE id = %s""", (roomId, charId))
 	db.commit()
 
 def getItemIdFromRoom(roomID):
-	cur.execute("""SELECT itemID FROM Rooms WHERE id = %d""", (roomID))
+	cur.execute("""SELECT itemID FROM Rooms WHERE id = %s""", (roomID,))
 	db.commit()
 
 def getProjectFromRoom(roomID):
-	cur.execute("""SELECT projectID FROM Rooms WHERE id = %d""", (roomID))
+	cur.execute("""SELECT projectID FROM Rooms WHERE id = %s""", (roomID,))
 	db.commit()
 
 def getTestName(testID):
-	cur.execute("""SELECT name FROM Tests WHERE id = %d""", (testID))
+	cur.execute("""SELECT name FROM Tests WHERE id = %s""", (testID,))
 	return cur.fetchall()
 
 def getQuestion(testID, questionID):
-	cur.execute("""SELECT question FROM Questions WHERE test = %d AND testQuestion = %d""", (testID, questionID))
+	cur.execute("""SELECT question FROM Questions WHERE test = %s AND testQuestion = %s""", (testID, questionID))
 	return cur.fetchall()
 
 def getAnswer(testID, questionID):
-	cur.execute("""SELECT answer FROM Questions WHERE test = %d AND testQuestion = %d""", (testID, questionID))
+	cur.execute("""SELECT answer FROM Questions WHERE test = %s AND testQuestion = %s""", (testID, questionID))
 	return cur.fetchall()
 
 #Please pass in negative number if health is decreasing
 def changeHealth(percentChange, charID):
-	cur.execute("""UPDATE Characters SET health = health + %d WHERE id = %d""", (percentChange, charID))
+	cur.execute("""UPDATE Characters SET health = health + %s WHERE id = %s""", (percentChange, charID))
 	db.commit()
 
 def healthMeaning(health):
-	cur.execute("""SELECT meaning FROM Health WHERE percent = %d""", (health))
+	cur.execute("""SELECT meaning FROM Health WHERE percent = %s""", (health,))
 	return cur.fetchall()

@@ -49,6 +49,7 @@ def signup():
          connector.addCharacter(name)
 
       except MySQLdb.Error as e:
+         print e
          return flask.redirect('/signup?message=Error')
          
       return flask.redirect(flask.url_for('login'))
@@ -67,9 +68,10 @@ def login():
    try:
       character = connector.charExists(username)
    except MySQLdb.Error as e:
+      print e
       return flask.redirect('/login?message=Error')
    
-   if character == None:
+   if not character:
       return flask.redirect('/login?message=Error')
 
    user = User(username, int(character[0][0]))
@@ -88,10 +90,6 @@ def index():
 @app.route('/begin', methods=['GET', 'POST'])
 @flask_login.login_required
 def begin():
-   # render the roomId
-   # add passage to the template
-   # add the 3 room travel options
-
    if flask.request.method == 'GET':
       if user != None:
          currentRoom = int(connector.getRoom(user.userid)[0][0])

@@ -54,8 +54,35 @@ def getRoom(charId):
 	db.commit()
 	return cur.fetchall() 
 
-def setRoom(roomId):
-	pass
+def setRoom(charId, roomId):
+	cur.execute("""UPDATE Characters SET currentRoom = %d WHERE id = %d""", (roomId, charId))
+	db.commit()
 
-def getItemIdFromRoom(roomId):
-	pass
+def getItemIdFromRoom(roomID):
+	cur.execute("""SELECT itemID FROM Rooms WHERE id = %d""", (roomID))
+	db.commit()
+
+def getProjectFromRoom(roomID):
+	cur.execute("""SELECT projectID FROM Rooms WHERE id = %d""", (roomID))
+	db.commit()
+
+def getTestName(testID):
+	cur.execute("""SELECT name FROM Tests WHERE id = %d""", (testID))
+	return cur.fetchall()
+
+def getQuestion(testID, questionID):
+	cur.execute("""SELECT question FROM Questions WHERE test = %d AND testQuestion = %d""", (testID, questionID)
+	return cur.fetchall()
+
+def getAnswer(testID, questionID):
+	cur.execute("""SELECT answer FROM Questions WHERE test = %d AND testQuestion = %d""", (testID, questionID))
+	return cur.fetchall()
+
+#Please pass in negative number if health is decreasing
+def changeHealth(percentChange, charID):
+	cur.execute("""UPDATE Characters SET health = health + %d WHERE id = %d""", (percentChange, charID)
+	db.commit()
+
+def healthMeaning(health):
+	cur.execute("""SELECT meaning FROM Health WHERE percent = %d""", (health)
+	cur.fetchall()

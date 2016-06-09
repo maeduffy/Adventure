@@ -2,12 +2,12 @@ import MySQLdb
 import re
 from sys import stdin
 
-db = MySQLdb.connect(host = "csc-db0", user = "cpew", passwd = "FunToPassHa7", db = "cpew")
+#db = MySQLdb.connect(host = "csc-db0", user = "cpew", passwd = "FunToPassHa7", db = "cpew")
 
-#db = MySQLdb.connect(host = 'localhost',
-#                     user = 'root',
- #                    passwd = '123',
-  #                   db = 'final')
+# db = MySQLdb.connect(host = 'localhost',
+#                      user = 'root',
+#                     	passwd = '123',
+#                    	db = 'final')
 
 cur = db.cursor()
 
@@ -17,10 +17,18 @@ def addCharacter(name):
 
 def charExists(name):
 	cur.execute("SELECT COUNT(*) FROM (SELECT name FROM Characters WHERE name = %s) AS names", (name))
-	return cur.fetchall
+	db.commit()
+	return cur.fetchall()
+
+def getCharRoom(id):
+	pass
+	# db.commit()
+	# return cur.fetchall()
 
 def roomText(id):
-	cur.execute("SELECT id, phrase FROM Rooms WHERE id = (SELECT pass1 FROM Rooms WHERE id = %d) OR id = (SELECT pass2 FROM Rooms WHERE id = %d) OR id = (SELECT pass3 FROM Rooms WHERE id = %d)", (id, id, id))
+	cur.execute("SELECT id, phrase FROM Rooms WHERE id = (SELECT pass1 FROM Rooms WHERE id = %d) OR id = (SELECT pass2 FROM Rooms WHERE id = %d) OR id = (SELECT pass3 FROM Rooms WHERE id = %d)",
+		(id, id, id))
+	db.commit()
 	return cur.fetchall()
 
 def addCurrentItem(char, item):
@@ -29,6 +37,7 @@ def addCurrentItem(char, item):
 
 def checkProjectComplete(char, project):
 	cur.execute("SELECT COUNT(*) FROM CompletedProjects WHERE CharId = %s AND id = %d", (char, project))
+	db.commit()
 	return cur.fetchall()
 
 def setProjectComplete(char, project, score):
@@ -37,6 +46,7 @@ def setProjectComplete(char, project, score):
 
 def checkTestComplete(char, test):
 	cur.execute("SELECT COUNT(*) FROM CompletedProjects WHERE CharId = %s AND id = %d", (char, test))
+	db.commit()
 	return cur.fetchall()
 
 def setTestComplete(char, test, score):

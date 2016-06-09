@@ -16,11 +16,6 @@ login_manager.init_app(app)
 login_manager.login_view = '/login'
 
 logging.basicConfig(level=logging.DEBUG)
-db = MySQLdb.connect(host = 'localhost',
-                     user = 'root',
-                     passwd = '123',
-                     db = 'final')
-cur = db.cursor()
 
 class User(flask_login.UserMixin):
    def __init__(self, username, userid):
@@ -72,18 +67,14 @@ def login():
    
    try:
       # Get a connector python method that checks for Character existence.
-      statement = "SELECT * FROM Characters WHERE name = '%s'" % username
-      cur.execute(statement)
-      db.commit()
-      character = cur.fetchall()
-      # print "Received", character
+      character = connector.charExists(username)
    except MySQLdb.Error as e:
          return flask.redirect('/login?message=Error')
    
    if character == None:
       return flask.redirect('/login?message=Error')
 
-   user = User(character[0][1], character[0][0])
+   user = User(username, character[0][0])
    flask_login.login_user(user, remember=True)
 
    return flask.redirect(flask.url_for('index'))

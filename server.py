@@ -23,7 +23,6 @@ class User(flask_login.UserMixin):
       self.userid = userid
 
    def is_authenticated(self):
-      # print "authenticated?", self, self.userid
       return True
 
    def is_active(self):
@@ -66,15 +65,14 @@ def login():
    username = flask.request.form['name']
    
    try:
-      # Get a connector python method that checks for Character existence.
       character = connector.charExists(username)
    except MySQLdb.Error as e:
-         return flask.redirect('/login?message=Error')
+      return flask.redirect('/login?message=Error')
    
    if character == None:
       return flask.redirect('/login?message=Error')
 
-   user = User(username, character[0][0])
+   user = User(username, int(character[0][0]))
    flask_login.login_user(user, remember=True)
 
    return flask.redirect(flask.url_for('index'))
@@ -94,26 +92,58 @@ def begin():
    # add passage to the template
    # add the 3 room travel options
 
-   if request.method == 'GET':
+   if flask.request.method == 'GET':
       if user != None:
-         # pray we know what our current room id is!
-         return flask.render_template('begin.html',
-            user=user.username,
-            room1=None,
-            room2=None,
-            room3=None,
-            button1=None, 
-            button2=None,
-            button3=None,
-            )
+         currentRoom = int(connector.getRoom(user.userid)[0][0])
+         rooms = connector.roomText(currentRoom)
+
+         if len(rooms) < 3:
+            return flask.render_template('begin.html',
+               user=user.username,
+               room1=rooms[0][0],
+               room2=rooms[1][0],
+               text1=rooms[0][1], 
+               text2=rooms[1][1]
+               )
+         else: 
+            return flask.render_template('begin.html',
+               user=user.username,
+               room1=rooms[0][0],
+               room2=rooms[1][0],
+               room3=rooms[2][0],
+               text1=rooms[0][1], 
+               text2=rooms[1][1], 
+               text3=rooms[2][1], 
+               )
 
    # on mouse click, get the result & reselect rooms
-   if request.method == 'POST':
+   if flask.request.method == 'POST':
       if user != None:
-         name = flask.request.form.get('submit')
-         # above will get the room value of the room id.
-         # add any items that the current room has to current items
+         chosenRoom = int(flask.request.form.get('form'))
+
          # set roomid as current room
+         rooms = connector.roomText(chosenRoom)
+
+         # add any items that the current room has to current items
+
+         if len(rooms) < 3:
+            return flask.render_template('begin.html',
+               user=user.username,
+               room1=rooms[0][0],
+               room2=rooms[1][0],
+               text1=rooms[0][1], 
+               text2=rooms[1][1]
+               )
+         else: 
+            return flask.render_template('begin.html',
+               user=user.username,
+               room1=rooms[0][0],
+               room2=rooms[1][0],
+               room3=rooms[2][0],
+               text1=rooms[0][1], 
+               text2=rooms[1][1], 
+               text3=rooms[2][1], 
+               )
 
    else:
       return flask.render_template('begin.html')
@@ -145,11 +175,6 @@ def request_loader(request):
    #       return user
 
    return None
-
-# @app.route('/protected', methods=['GET', 'POST']) 
-# @flask_login.login_required
-# def protected():
-#   return "Logged in as: " + flask_login.current_user.username
 
 if __name__ == "__main__":
    app.run(debug=True, port=8000)

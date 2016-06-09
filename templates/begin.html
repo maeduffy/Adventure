@@ -86,8 +86,13 @@
                         <span data-icon="&#xe033;" class="icon"></span>
                     </div>
                     <div class="intro-content">
-                        <h5>Choice 1</h5>
-                        <p>{{ room1 }}</p>
+                        <h5>
+                            <form action="/begin" method="post">
+                                <input type="submit" value="{{ room1 }}" 
+                                     name="form" id="f1" />
+                            </form>
+                        </h5>
+                        <p>{{ text1 }}</p>
                     </div>
                 </div>
                 <div class="col-md-4 intro-feature">
@@ -95,19 +100,33 @@
                         <span data-icon="&#xe030;" class="icon"></span>
                     </div>
                     <div class="intro-content">
-                        <h5>Choice 2</h5>
-                        <p>{{ room2 }}</p>
+                        <h5>
+                            <form action="/begin" method="post">
+                                <input type="submit" value="{{ room2 }}" 
+                                     name="form" id="f2" />
+                            </form>
+                        </h5>
+                        <p>{{ text2 }}</p>
                     </div>
                 </div>
+
+                {% if room3 %}
                 <div class="col-md-4 intro-feature">
                     <div class="intro-icon">
                         <span data-icon="&#xe046;" class="icon"></span>
                     </div>
                     <div class="intro-content last">
-                        <h5>Choice 3</h5>
-                        <p>{{ room3 }}</p>
+                        <h5>
+                            <form action="/begin" method="post">
+                                <input type="submit" value="{{ room3 }}" 
+                                     name="form" id="f3" />
+                            </form>
+                        </h5>
+                        <p>{{ text3 }}</p>
                     </div>
                 </div>
+                {% endif %}
+
             </div>
         </div>
     </section>

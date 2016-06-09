@@ -152,7 +152,8 @@ def begin():
 def logout():
    flask_login.logout_user()
    # eventually, we'll get this to a template.
-   return 'Bye! You have been logged out.'
+   return flask.render_template('logout.html')
+
 
 @login_manager.unauthorized_handler
 def unauthorized_handler():

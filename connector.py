@@ -71,7 +71,7 @@ def getTestName(testID):
 	return cur.fetchall()
 
 def getQuestion(testID, questionID):
-	cur.execute("""SELECT question FROM Questions WHERE test = %d AND testQuestion = %d""", (testID, questionID)
+	cur.execute("""SELECT question FROM Questions WHERE test = %d AND testQuestion = %d""", (testID, questionID))
 	return cur.fetchall()
 
 def getAnswer(testID, questionID):
@@ -80,9 +80,9 @@ def getAnswer(testID, questionID):
 
 #Please pass in negative number if health is decreasing
 def changeHealth(percentChange, charID):
-	cur.execute("""UPDATE Characters SET health = health + %d WHERE id = %d""", (percentChange, charID)
+	cur.execute("""UPDATE Characters SET health = health + %d WHERE id = %d""", (percentChange, charID))
 	db.commit()
 
 def healthMeaning(health):
-	cur.execute("""SELECT meaning FROM Health WHERE percent = %d""", (health)
-	cur.fetchall()
+	cur.execute("""SELECT meaning FROM Health WHERE percent = %d""", (health))
+	return cur.fetchall()

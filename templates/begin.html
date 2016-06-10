@@ -39,11 +39,8 @@
                             </ul> -->
                             <ul class="member-actions">
                                     <li> <class="btn-white btn-small"> Health: {{ health }} </li>
-                                   <li> <a href="/begin" class="btn-white btn-small"> Begin Adventure </a> </li>
-                                   <li> <a href="/logout" class="btn-white btn-small"> Logout </a> </li>
-                                <li><a href="/leaderboard" class="leaderboard" style="padding-right:20px">Leaderboard</a></li>
-                                <li> <a href="/logout"> Logout </a> </li>
-
+                                    <li><a href="/leaderboard" class="leaderboard" style="padding-right:20px">Leaderboard</a></li>
+                                    <li> <a href="/logout"> Logout </a> </li>
                                    <li> <a href="/begin" class="btn-white btn-small"> Begin Adventure </a> </li>
                             </ul>
                         </nav>
@@ -64,11 +61,11 @@
                             {% if project %}{{ project }} You got a score of {{ score }}{% endif %}
                             {% if test %}Surprise Test! You're now taking the {{ test }}.<br><br>
                                 <form action="/begin" method="POST">
-                                  1. {{ q1 }} <input type="text" name="f1"><br>
-                                  2. {{ q2 }} <input type="text" name="f2"><br>
-                                3. {{ q3 }} <input type="text" name="f3"><br>
-                                4. {{ q4 }} <input type="text" name="f4"><br>
-                                5. {{ q5 }} <input type="text" name="f5"><br>
+                                1. {{ q1 }} <br><input type="f1" name="f1"><br>
+                                2. {{ q2 }} <br><input type="f2" name="f2"><br>
+                                3. {{ q3 }} <br><input type="f3" name="f3"><br>
+                                4. {{ q4 }} <br><input type="f4" name="f4"><br>
+                                5. {{ q5 }} <br><input type="f5" name="f5"><br>
                                   <input type="submit" value="Submit">
                                 </form>
                             {% endif %}
@@ -95,6 +92,7 @@
     <section class="intro section-padding">
         <div class="container">
             <div class="row">
+                {% if room1 %}
                 <div class="col-md-4 intro-feature">
                     <div class="intro-icon">
                         <span data-icon="&#xe033;" class="icon"></span>
@@ -108,6 +106,9 @@
                         </h5>
                     </div>
                 </div>
+                {% endif %}
+
+                {% if room2 %}
                 <div class="col-md-4 intro-feature">
                     <div class="intro-icon">
                         <span data-icon="&#xe030;" class="icon"></span>
@@ -121,6 +122,7 @@
                         </h5>
                     </div>
                 </div>
+                {% endif %}
 
                 {% if room3 %}
                 <div class="col-md-4 intro-feature">

@@ -13,18 +13,20 @@ INSERT INTO Health VALUES
 (90, "That's alright. You are still doing pretty week"),
 (100, "You are killing it. Keep going!");
 
+
 INSERT INTO Items VALUES
 (1, 'fork', 'you have obtained a fork.'),
 (2, 'pipe', 'you have obtained a pipe.'),
-(3, 'maple syrup', 'you have obtained maple syrup'),
-(4, 'alien', 'you have been obtained by an alein. I wonder where he is from'),
-(5, 'deck of cards', 'you have obtained a deck of cards. Maybe you can play a game'),
-(6, 'vaccuum', 'you have obtained a vaccuum. ')
-;
+(3, 'maple syrup', 'you have obtained maple syrup.'),
+(4, 'alien', 'you have been obtained by an alien.'),
+(5, 'deck of cards', 'you have obtained a deck of cards.'),
+(6, 'vaccuum', 'you have obtained a vaccuum. '),
+(7, 'bender', 'you have obtained bender.'),
+(8, 'shell', 'you have obtained a shell');
 
 INSERT INTO Projects VALUES
-(1, 'Martian Poker', 'you have been tasked to create a new card game for your martian friend. '),
-(2, 'Linear Sim', 'You have been tasked to use forks and pipes to ...'),
+(1, 'Martian Poker', 'you have been tasked to create a new card game for your martian friend. Items needed: \n1 - Alien\n1 - Deck of Cards'),
+(2, 'Linear Sim', 'But you don''t need forks and knives for this project. You need forks and pipes in order to model computational fluid dynamics. Good luck with that.'),
 (3, 'LZW', 'You have been tasked to write a compression algorithm to compress your hatred of this class'),
 (4, 'Calculon', 'You have been tasked to write a compiler');
 
@@ -34,11 +36,13 @@ INSERT INTO ProjectItems VALUES
 (3, 2, 1),
 (4, 2, 2),
 (5, 2, 3),
-(6, 3, 6);
+(6, 3, 6),
+(7, 4, 7),
+(8, 4, 8);
 
 INSERT INTO Rooms VALUES
 (1, 2, 3, 7, NULL, NULL, 'You have always been good with computers? That is funny. This class will make or break you. After this class, you will no longer be good with computers, you will be a good computer, become one with the machine. In each room, you will have up to 3 choices. You may move to the left, to the right, or backwards. Choose wisely and you will come out victorious, ready for bigger and better (or worse, let\'s be real) things. Good luck!'),
-(2, 1, 10, 14, NULL, NULL, ''),
+(2, 1, 10, 14, 7, NULL, 'Suddenly you are teleported to a new planet and land on a piece of metal. As you walk off the sheet of metal you hear a grunt from below you, "Bite my shiny metal ass!" You realize that you found BENDER!!!'),
 (3, 1, 4, 16, NULL, NULL, ''),
 (4, 3, 5, 19, NULL, NULL, ''),
 (5, 4, 6, 22, NULL, NULL, ''),
@@ -56,7 +60,7 @@ INSERT INTO Rooms VALUES
 (17, 16, 18, 37, 2, NULL, 'It looks as though you have stumbled into the architecture building. The building seems to be inside out, with pipes on the outsides of walls. Who puts pipes outside of walls? Silly architects. Trying to be cool and shit.'),
 (18, 17, 19, 40, NULL, NULL, 'After another meeting at 7 am, you drag yourself out of the CSL and head toward Subway for some much deserved food. '),
 (19, 4, 18, 20, NULL, NULL, ''),
-(20, 19, 21, 42, NULL, NULL, ''),
+(20, 19, 21, 42, 8, NULL, 'She sells sea shells by the sea shore. Oh look! A sea shell.'),
 (21, 20, 22, NULL, NULL, NULL, ''),
 (22, 5, 21, 23, NULL, NULL, ''),
 (23, 22, 24, NULL, NULL, 2, 'Time for some food! From the other side of the restaurant you hear "forks and knives, forks and knives," just like that one joke from middle school.'),

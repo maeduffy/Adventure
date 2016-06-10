@@ -43,7 +43,7 @@
                                 <!-- <li><a href="#download" class="login">Log in</a></li>
                                 <li><a href="#download" class="btn-white btn-small">Sign up</a></li> -->
                                 <li><a href="/leaderboard" class="leaderboard" style="padding-right:20px">Leaderboard</a></li>
-
+                               
                                 {% if user %}
                                 <li> <a href="/begin" class="btn-white btn-small"> Begin Adventure </a> </li>
                                 <li> <a href="/logout"> Logout </a> </li>
@@ -71,16 +71,20 @@
                     
                 </div>
                 <!-- <table style="width:50%; color:black;border:10px solid white; margin-left:auto;margin-right:auto" border="1" bordercolor="white" background-color="green"> -->
-                <table style="width:50%;background-color:powderblue;color:black;opacity:.7;font-size:20px;font-weight:bold;border:10px solid white; text-align: center;margin-left:auto;margin-right:auto" border="1" bordercolor="white">
+                <table class=entries style="width:50%;background-color:powderblue;color:black;opacity:.7;font-size:20px;font-weight:bold;border:10px solid white; text-align: center;margin-left:auto;margin-right:auto" border="1" bordercolor="white">
                     <tr>
+                        <td>Place</td>
                         <td>Name</td>
                         <td>Score</td>
                     </tr>
-                    <tr style="font-weight:normal">
-                        <td>Test</td>
-                        <td>It</td>
-                    </tr> 
-                </table>
+                    {% for entry in entries %}
+                     <tr style="font-weight:normal">
+                    <td>{{loop.index}}</td>
+                    <td>{{entry[0]}}</td>
+                    <td>{{entry[1]}}</td>
+                 </tr>
+                    {% endfor %}
+</table>
             </div>
   
         </div>

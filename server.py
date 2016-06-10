@@ -235,6 +235,7 @@ def begin():
                pItem = pItem[0]
                if connector.checkObtainedItemExists(user.userid, pItem) == False:
                   allItemsExist = False
+                  text += "\n. It also looks like there's a project in this room, but you can't complete it yet."
                   break
 
             if allItemsExist:
@@ -366,7 +367,6 @@ def compareAnswers(studentAnswers, testAnswers):
    score = 0
 
    for i in range(len(studentAnswers)):
-      # print studentAnswers[i], testAnswers[i]
       if studentAnswers[i] == testAnswers[i]:
          score += 20
 

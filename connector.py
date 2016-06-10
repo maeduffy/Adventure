@@ -154,3 +154,4 @@ def getLeaders():
 
 def addLeader(charId, finalHealth):
 	cur.execute("""INSERT INTO Leaderboard VALUES (NULL, %d, %d)""", (charId, finalHealth))
+	db.commit()

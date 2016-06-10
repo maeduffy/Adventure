@@ -5,7 +5,7 @@ from sys import stdin
 #db = MySQLdb.connect(host = "csc-db0", user = "cpew", passwd = "FunToPassHa7", db = "cpew")
 
 # Michelle's local credentials. Modify if running it for yourself!
-db = MySQLdb.connect(host = 'localhost', user = 'root', passwd = '123', db = 'final')
+db = MySQLdb.connect(host = 'localhost', user = 'root', passwd = 'pass123', db = 'carapew')
 
 cur = db.cursor()
 
@@ -147,3 +147,11 @@ def getHealthFromScore(score):
 def getHealth(charId):
 	cur.execute("""SELECT health FROM Characters WHERE id = %s""", (charId,))
 	return cur.fetchall()
+
+def getLeaders():
+	cur.execute("""SELECT C.name, L.score FROM Leaderboard L JOIN Characters C ON C.id = L.charID ORDER BY score DESC""")
+	return cur.fetchall()
+
+def addLeader(charId, finalHealth):
+	cur.execute("""INSERT INTO Leaderboard VALUES (NULL, %d, %d)""", (charId, finalHealth))
+	db.commit()

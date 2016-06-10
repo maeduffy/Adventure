@@ -349,10 +349,10 @@ def logout():
 
 @app.route('/leaderboard')
 def leaderboard():
-   # load all Characters, health
-   connector
-
-   return flask.render_template('leaderboard.html')
+<<<<<<< HEAD
+   # load all Characters, scores, health
+   entries = connector.getLeaders()
+   return flask.render_template('leaderboard.html', entries = entries)
 
 @login_manager.unauthorized_handler
 def unauthorized_handler():

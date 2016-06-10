@@ -19,9 +19,14 @@ def charExists(name):
 	db.commit()
 	return cur.fetchall()
 
-def roomText(userid):
-	cur.execute("""SELECT id, phrase FROM Rooms WHERE id = (SELECT pass1 FROM Rooms WHERE id = '%s') OR id = (SELECT pass2 FROM Rooms WHERE id = '%s') OR id = (SELECT pass3 FROM Rooms WHERE id = '%s')""",
+def getRooms(userid):
+	cur.execute("""SELECT id FROM Rooms WHERE id = (SELECT pass1 FROM Rooms WHERE id = '%s') OR id = (SELECT pass2 FROM Rooms WHERE id = '%s') OR id = (SELECT pass3 FROM Rooms WHERE id = '%s')""",
 		(userid, userid, userid))
+	db.commit()
+	return cur.fetchall()
+
+def roomText(roomId):
+	cur.execute("""SELECT phrase FROM Rooms WHERE id = %s""", (roomId,))
 	db.commit()
 	return cur.fetchall()
 
@@ -59,10 +64,12 @@ def setRoom(charId, roomId):
 def getItemIdFromRoom(roomID):
 	cur.execute("""SELECT itemID FROM Rooms WHERE id = %s""", (roomID,))
 	db.commit()
+	return cur.fetchall()
 
 def getProjectFromRoom(roomID):
 	cur.execute("""SELECT projectID FROM Rooms WHERE id = %s""", (roomID,))
 	db.commit()
+	return cur.fetchall()
 
 def getTestName(testID):
 	cur.execute("""SELECT name FROM Tests WHERE id = %s""", (testID,))

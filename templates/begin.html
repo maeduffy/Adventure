@@ -61,15 +61,8 @@
             <div class="row">
                 <div class="col-md-10 col-md-offset-1">
                     <div class="hero-content text-center">
-                        <h1>Start your own CPE 357 Adventure!</h1>
-                        <p class="intro">Ever wanted to know what it's like being in 357? Need to relive a few memorable occasions? You're at the right spot.</p>
-                        {% if user %}
-                            <a href="/begin" class="btn btn-fill btn-large btn-margin-right">Begin Adventure</a>
-                            <a href="/logout" class="btn btn-accent btn-large">Logout</a>
-                        {% else %}
-                            <a href="/login" class="btn btn-fill btn-large btn-margin-right">Log into a Current Adventure</a>
-                            <a href="/signup" class="btn btn-accent btn-large">Create a New Adventure</a>
-                        {% endif %}
+                        <h1>Hey {{ user }}, you're currently in room {{ room }}</h1>
+                        <p class="intro">{{ text }}</p>
                     </div>
                 </div>
             </div>
@@ -92,7 +85,6 @@
                                      name="form" id="f1" />
                             </form>
                         </h5>
-                        <p>{{ text1 }}</p>
                     </div>
                 </div>
                 <div class="col-md-4 intro-feature">
@@ -106,7 +98,6 @@
                                      name="form" id="f2" />
                             </form>
                         </h5>
-                        <p>{{ text2 }}</p>
                     </div>
                 </div>
 
@@ -122,7 +113,6 @@
                                      name="form" id="f3" />
                             </form>
                         </h5>
-                        <p>{{ text3 }}</p>
                     </div>
                 </div>
                 {% endif %}

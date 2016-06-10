@@ -91,3 +91,11 @@ def changeHealth(percentChange, charID):
 def healthMeaning(health):
 	cur.execute("""SELECT meaning FROM Health WHERE percent = %s""", (health,))
 	return cur.fetchall()
+
+def getItemDesc(itemId):
+	cur.execute("""SELECT message FROM Items WHERE id = %s""", (itemId,))
+	db.commit()
+	return cur.fetchall()
+
+def checkItemExists(itemId):
+	pass

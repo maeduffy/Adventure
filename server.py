@@ -92,9 +92,6 @@ def begin():
          currentRoom = int(connector.getRoom(user.userid)[0][0])
          rooms = connector.getRooms(currentRoom)
          text = connector.roomText(currentRoom)[0][0]
-         item = connector.getItemIdFromRoom(currentRoom)[0][0]
-         project = connector.getProjectFromRoom(currentRoom)[0][0]
-
 
          if len(rooms) < 3:
             return flask.render_template('begin.html',
@@ -102,8 +99,7 @@ def begin():
                room1=rooms[0][0],
                room2=rooms[1][0],
                text=text,
-               room=currentRoom,
-               item=item
+               room=currentRoom
                )
          else: 
             return flask.render_template('begin.html',
@@ -112,8 +108,7 @@ def begin():
                room2=rooms[1][0],
                room3=rooms[2][0],
                text=text,
-               room=currentRoom,
-               item=item
+               room=currentRoom
                )
 
    # on mouse click, get the result & reselect rooms
@@ -122,14 +117,48 @@ def begin():
          currentRoom = int(flask.request.form.get('form'))
          rooms = connector.getRooms(currentRoom)
          text = connector.roomText(currentRoom)[0][0]
-         item = connector.getItemIdFromRoom(currentRoom)[0][0]
-         project = connector.getProjectFromRoom(currentRoom)[0][0]
+        
+         itemId = connector.getItemIdFromRoom(currentRoom)[0][0]
+         item = connector.getItemDesc(itemId)[0][0]
+         # need connector here to confirm whether itemId already exists for user
+         connector.addCurrentItem(user.userid, itemId)
 
-         # generate random test
+         print
+         print item
+         print
+         if item != "nothing":
+            if len(rooms) < 3:
+               return flask.render_template('begin.html',
+                  user=user.username,
+                  room1=rooms[0][0],
+                  room2=rooms[1][0],
+                  text=text,
+                  room=currentRoom,
+                  item=item
+                  )
+            else:
+               return flask.render_template('begin.html',
+                  user=user.username,
+                  room1=rooms[0][0],
+                  room2=rooms[1][0],
+                  room3=rooms[2][0],
+                  text=text,
+                  room=currentRoom,
+                  item=item
+                  )
+
+         # non-existent projects are NULL (rn 0)
+         # project = connector.getProjectFromRoom(currentRoom)[0][0]
+         # if project is not NULL and we haven't finished it yet
+         # check 2-3 items from project, if we have it for not
+         # if all items are had, we complete it
+         # generate a random score and mark project as complete
+
+         # generate random test, only on non-project and non-item pages
          # rand = random.randint(0, 10)
          # if rand == 10:
          #    connector.getTest()
-
+         # ask cara on this
 
          if len(rooms) < 3:
             return flask.render_template('begin.html',
@@ -137,8 +166,7 @@ def begin():
                room1=rooms[0][0],
                room2=rooms[1][0],
                text=text,
-               room=currentRoom,
-               item=item
+               room=currentRoom
                )
          else: 
             return flask.render_template('begin.html',
@@ -147,8 +175,7 @@ def begin():
                room2=rooms[1][0],
                room3=rooms[2][0],
                text=text,
-               room=currentRoom,
-               item=item
+               room=currentRoom
                )
 
    else:

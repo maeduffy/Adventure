@@ -38,16 +38,8 @@
                                 <li><a href="#download">Download</a></li>
                             </ul> -->
                             <ul class="member-actions">
-                                <!-- <li><a href="#download" class="login">Log in</a></li>
-                                <li><a href="#download" class="btn-white btn-small">Sign up</a></li> -->
-                                {% if user %}
                                    <li> <a href="/begin" class="btn-white btn-small"> Begin Adventure </a> </li>
                                    <li> <a href="/logout"> Logout </a> </li>
-                                {% else %}
-                                   <li> <a href="/login?uri=/" class="login"> Login </a> </li>
-                                   <li> <a href="/signup" class="btn-white btn-small"> Sign Up </a> </li>
-                                {% endif %}
-
                             </ul>
                         </nav>
                     </div>
@@ -61,8 +53,13 @@
             <div class="row">
                 <div class="col-md-10 col-md-offset-1">
                     <div class="hero-content text-center">
-                        <h1>Hey {{ user }}, you're currently in room {{ room }}</h1>
+                        <h1>Hey {{ user }}, you're currently in room {{ room }}.</h1>
                         <p class="intro">{{ text }}</p>
+                        <p>
+                            {% if item %}
+                            {{ item }}
+                            {% endif %}
+                        </p>
                     </div>
                 </div>
             </div>

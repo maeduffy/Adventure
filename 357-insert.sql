@@ -32,13 +32,13 @@ INSERT INTO Questions VALUES
 (13, 3, 3, 'How many bits are in a short?', '16'),
 (14, 3, 4, 'What spooky name is given to a child whose parent exits without waiting for it?', 'zombie'),
 (15, 3, 5, 'On a scale of 1-10, how much stress do you feel?', '10'),
-(16, 3, 5, '0 is FALSE and 1 is true right?', '1');
+(16, 3, 6, '0 is FALSE and 1 is true right?', '1');
 
 
 INSERT INTO Health VALUES
 (0, 'You just died'),
 (5, 'You are on the verge of death. Better do better'),
-(50, 'You better be careful, you are already at half life!')
+(50, 'You better be careful, you are already at half life!'),
 (90, 'That''s alright. You are still doing pretty week'),
 (100, 'You are killing it. Keep going!');
 

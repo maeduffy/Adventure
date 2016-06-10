@@ -37,9 +37,9 @@ INSERT INTO Questions VALUES
 
 INSERT INTO Health VALUES
 (0, 'You just died'),
-(5, 'You are on the verge of death. Better do better'),
+(10, 'You are on the verge of death. Better do better'),
 (50, 'You better be careful, you are already at half life!'),
-(90, 'That''s alright. You are still doing pretty week'),
+(90, 'That''s alright. You are still doing pretty well'),
 (100, 'You are killing it. Keep going!');
 
 
@@ -49,7 +49,7 @@ INSERT INTO Items VALUES
 (3, 'maple syrup', 'You have obtained maple syrup.'),
 (4, 'alien', 'You have been obtained by an alien.'),
 (5, 'deck of cards', 'You have obtained a deck of cards.'),
-(6, 'vaccuum', 'You have obtained a vaccuum. '),
+(6, 'vacuum', 'You have obtained a vacuum. '),
 (7, 'bender', 'You have obtained bender.'),
 (8, 'shell', 'You have obtained a shell');
 
@@ -70,13 +70,13 @@ INSERT INTO ProjectItems VALUES
 (8, 4, 8);
 
 INSERT INTO Rooms VALUES
-(1, 2, 3, 7, NULL, NULL, 'You have always been good with computers? That is funny. This class will make or break you. After this class, you will no longer be good with computers, you will be a good computer, become one with the machine. In each room, you will have up to 3 choices. You may move to the left, to the right, or backwards. Choose wisely and you will come out victorious, ready for bigger and better (or worse, let\'s be real) things. Good luck!'),
+(1, 2, 3, 7, NULL, NULL, 'You have always been good with computers? That is funny. This class will make or break you. After this class, you will no longer be good with computers, you will be a good computer, become one with the machine. In each room, you will have up to 3 choices. You may move to the left, to the right, or backwards. Choose wisely and you will come out victorious, ready for bigger and better (or worse, let’'s be real) things. Good luck!'),
 (2, 1, 10, 14, 7, NULL, 'Suddenly you are teleported to a new planet and land on a piece of metal. As you walk off the sheet of metal you hear a grunt from below you, "Bite my shiny metal ass!" You realize that you found BENDER!!!'),
 (3, 1, 4, 16, NULL, NULL, 'YOU CAN DO IT!'),
 (4, 3, 5, 19, NULL, NULL, 'Real programmers count from 0'),
 (5, 4, 6, 22, NULL, NULL, 'Don''t fork this up.'),
 (6, 5, 7, 25, NULL, NULL, 'Wandering around the halls of Pilling, you see the ghosts of students past. "FOOOOOORRRKS", they say. "FOOOOOOORKS". One ghost wanders into the room to the left, and the rest go to the right.'),
-(7, 1, 6, 8, 1, NULL, 'You have entered a room made of forks. No, seriously. Forks. Forks on the ceiling. Forks on the walls. No, wait. The walls are literally forks. Their tines poking out into the middle of the room, it is hard not to be impailed.'),
+(7, 1, 6, 8, 1, NULL, 'You have entered a room made of forks. No, seriously. Forks. Forks on the ceiling. Forks on the walls. No, wait. The walls are literally forks. Their tines poking out into the middle of the room, it is hard not to be impaled.'),
 (8, 7, 9, 27, NULL, NULL, 'Another day in the life of a 357 student. Here''s hoping you make it through the day'),
 (9, 8, 10, 30, NULL, NULL, 'Maybe you can go to the P today... Wait. Nope, you are still taking this class.'),
 (10, 2, 9, 11, NULL, NULL, 'Hey. If you fail, you can always retake it. Except it will be a completely different class'),
@@ -84,7 +84,7 @@ INSERT INTO Rooms VALUES
 (12, 11, 13, NULL, NULL, NULL, 'Just 125-135 hours of studying this week!'),
 (13, 12, 14, 33, NULL, NULL, '"Vim is better!" "No! Nano is better" Better put your head down and walk away while you still can.'),
 (14, 2, 13, 15, NULL, NULL, '"This way or that?" you ask. I will give you some pointers.'),
-(15, 14, 16, 35, NULL, 1, 'The room is dark and smokey. Through the dense smoke, you see what appears to be a table. "A table in a dark smokey room?" you mutter to yourself. What am I doing here?'),
+(15, 14, 16, 35, NULL, 1, 'The room is dark and smokey. Through the dense smoke, you see what appears to be a table. "A table in a dark smoky room?" you mutter to yourself. What am I doing here?'),
 (16, 3, 15, 17, NULL, NULL, 'Sometimes, you just need to pass out on Dexter for a couple of hours'),
 (17, 16, 18, 37, 2, NULL, 'It looks as though you have stumbled into the architecture building. The building seems to be inside out, with pipes on the outsides of walls. Who puts pipes outside of walls? Silly architects. Trying to be cool and shit.'),
 (18, 17, 19, 40, NULL, NULL, 'After another meeting at 7 am, you drag yourself out of the CSL and head toward Subway for some much deserved food. '),
@@ -95,7 +95,7 @@ INSERT INTO Rooms VALUES
 (23, 22, 24, NULL, NULL, 2, 'Time for some food! From the other side of the restaurant you hear "forks and knives, forks and knives," just like that one joke from middle school.'),
 (24, 23, 25, 43, NULL, NULL, 'Don''t worry about getting classes next quarter on PASS, you probably won'' pass this class anyway.'),
 (25, 6, 24, 26, NULL, NULL, 'My heart beats SLO -wer and the slower the further into this all-nighter I get.'),
-(26, 25, 27, 45, NULL, 3, 'Mom always warned you to pick up a vaccuum at Target but there never seemed to be a good reason for it until now, when you have to cram a lot of stuff in a little space. '),
+(26, 25, 27, 45, NULL, 3, 'Mom always warned you to pick up a vacuum at Target but there never seemed to be a good reason for it until now, when you have to cram a lot of stuff in a little space. '),
 (27, 8, 26, 28, NULL, NULL, 'It''s time for some Engi-beer-ing'),
 (28, 27, 29, 47, NULL, NULL, 'You get to the tutoring center 30 minutes before it starts and are already the 20th person on the waitlist. So, no; no help for you today.'),
 (29, 28, 30, NULL, NULL, NULL, 'A foo walks into a bar, looks around, and says "hello, world"'),
@@ -117,4 +117,3 @@ INSERT INTO Rooms VALUES
 (45, 26, 44, 46, NULL, NULL, 'I hate my life'),
 (46, 45, 47, NULL, 6, NULL, 'Vroom Vroom motherfucker!'),
 (47, 46, 28, NULL, NULL, NULL, 'Just remember, after this, it only goes downhill. Except 365 ;)');
-

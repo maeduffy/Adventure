@@ -98,33 +98,35 @@ def getItemDesc(itemId):
 	return cur.fetchall()
 
 def nextTest(charId):
-	cur.execute("""SELECT COUNT(*) FROM CompletedTests WHERE charID = %d""", (charId))
+	cur.execute("""SELECT COUNT(*) FROM CompletedTests WHERE charID = %s""", (charId,))
 	completeCount = cur.fetchall()[0][0]
 	cur.execute("""SELECT COUNT(*) FROM Tests""")
 	testCount = cur.fetchall()[0][0]
-	if (completeCount == testCount):
+	if completeCount == testCount:
 		return False
 	else:
 		return testCount - (testCount - completeCount) + 1
 
 def projectItems(projectId):
-	cur.execute("""SELECT itemID FROM ProjectItems WHERE projectID = %s""", (projectId))
+	cur.execute("""SELECT itemID FROM ProjectItems WHERE projectID = %s""", (projectId,))
 	return cur.fetchall()
 
 # check existence in currentItems, return true/false
-def checkObtainedItemExists(itemId):
-	cur.execute("""SELECT COUNT(*) FROM CurrentItems WHERE id = %d""", (itemId))
-	if (cur.fetchall()[0][0] == 0):
+def checkObtainedItemExists(userId, itemId):
+	cur.execute("""SELECT COUNT(*) FROM CurrentItems WHERE CharId = %s AND id = %s""", (userId, itemId))
+	if cur.fetchall()[0][0] == 0:
 		return False
 	else:
 		return True
 
-# check existence in Items for use in Project, return true/false
-def checkCurrentItemExists(itemId):
-	
-	return False
-	return True
-
 def getProjectMessage(projectId):
-	cur.execute("""SELECT message FROM Projects WHERE projectID = %d""", (projectId))
+	cur.execute("""SELECT message FROM Projects WHERE projectID = %s""", (projectId,))
+	return cur.fetchall()
+
+def getHealthFromScore(score):
+	cur.execute("""SELECT healthEffect FROM Scores WHERE score = %s""", (score,))
+	return cur.fetchall()
+
+def getHealth(charId):
+	cur.execute("""SELECT health FROM Characters WHERE id = %s""", (charId,))
 	return cur.fetchall()

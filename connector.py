@@ -110,3 +110,6 @@ def nextTest():
 def projectItems(projectId):
 	cur.execute("""SELECT itemID FROM ProjectItems WHERE projectID = %d""", projectId)
 	return cur.fetchall()
+
+def checkItemExists(itemId):
+	pass

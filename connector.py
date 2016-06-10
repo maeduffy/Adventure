@@ -97,5 +97,16 @@ def getItemDesc(itemId):
 	db.commit()
 	return cur.fetchall()
 
-def checkItemExists(itemId):
-	pass
+def nextTest():
+	cur.execute("""SELECT COUNT(*) FROM CompletedTests""")
+	completeCount = cur.fetchall[0][0]
+	cur.execute("""SELECT COUNT(*) FROM Tests""")
+	testCount = cur.fetchall[0][0]
+	if (completeCount == testCount):
+		return null
+	else:
+		return testCount - (testCount - completeCount) + 1
+
+def projectItems(projectId):
+	cur.execute("""SELECT itemID FROM ProjectItems WHERE projectID = %d""", projectId)
+	return cur.fetchall()

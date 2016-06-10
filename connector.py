@@ -97,10 +97,8 @@ def getItemDesc(itemId):
 	db.commit()
 	return cur.fetchall()
 
-# take in a user id for Characters to be used in CompletedTests
-# if there is more than 1 user, this will break as is
-def nextTest():
-	cur.execute("""SELECT COUNT(*) FROM CompletedTests""")
+def nextTest(charId):
+	cur.execute("""SELECT COUNT(*) FROM CompletedTests WHERE charID = %d""", (charId))
 	completeCount = cur.fetchall()[0][0]
 	cur.execute("""SELECT COUNT(*) FROM Tests""")
 	testCount = cur.fetchall()[0][0]
@@ -110,16 +108,23 @@ def nextTest():
 		return testCount - (testCount - completeCount) + 1
 
 def projectItems(projectId):
-	cur.execute("""SELECT itemID FROM ProjectItems WHERE projectID = %s""", (projectId,))
+	cur.execute("""SELECT itemID FROM ProjectItems WHERE projectID = %s""", (projectId))
 	return cur.fetchall()
 
 # check existence in currentItems, return true/false
 def checkObtainedItemExists(itemId):
-	pass
+	cur.execute("""SELECT COUNT(*) FROM CurrentItems WHERE id = %d""", (itemId))
+	if (cur.fetchall()[0][0] == 0):
+		return False
+	else:
+		return True
 
 # check existence in Items for use in Project, return true/false
 def checkCurrentItemExists(itemId):
-	pass
+	
+	return False
+	return True
 
 def getProjectMessage(projectId):
-	pass
+	cur.execute("""SELECT message FROM Projects WHERE projectID = %d""", (projectId))
+	return cur.fetchall()

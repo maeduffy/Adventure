@@ -7,6 +7,24 @@ INSERT INTO Tests VALUES
 (2, 'Midterm 2'),
 (3, 'Final');
 
+INSERT INTO Questions VALUES 
+(1, 1, 1, "char* phrase = \"I Love 357\"; char* letter = char + 2; What is the value of letter[3]?", "e")
+(2, 1, 2, "Complete this sentence by Staley: \'Coming back from a...\'", "pause")
+(3, 1, 3, "How do you list all the files in your current directory?", "ls")
+(4, 1, 4, "What is 0x22 in binary?", "00100010")
+(5, 1, 5, "What is 35 >> 1", "17")
+(6, 2, 1, "What is Staley's favorite theme of shirt?", "hawaiian")
+(7, 2, 2, "Who has both TAed for and taught 357?", "Andrew Wang")
+(8, 2, 3, "What language should you be very familiar with?", "C")
+(9, 2, 4, "How many bytes are in a char?", "1")
+(10, 2, 5, "What is the name of the system call that can be used to create another process or can be used as a kitchen utensil?", "fork")
+(11, 3, 1, "What is 20 & 15", "4")
+(12, 3, 2, "What should now be your favorite text editor?", "vim")
+(13, 3, 3, "How many bits are in a short?", "16")
+(14, 3, 4, "What spooky name is given to a child whose parent exits without waiting for it?", "zombie") 
+(15, 3, 5, "On a scale of 1-10, how much stress do you feel?", "10");
+
+
 INSERT INTO Health VALUES
 (0, "You just died"),
 (5, "You are on the verge of death. Better do better"),

@@ -34,9 +34,6 @@ class User(flask_login.UserMixin):
    def get_id(self):
       return chr(self.userid)
 
-   def __repr__(self):
-      return '<User %r>' % self.username
-
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
    if flask.request.method == 'GET':
@@ -93,15 +90,20 @@ def begin():
    if flask.request.method == 'GET':
       if user != None:
          currentRoom = int(connector.getRoom(user.userid)[0][0])
-         rooms = connector.roomText(currentRoom)
+         rooms = connector.getRooms(currentRoom)
+         text = connector.roomText(currentRoom)[0][0]
+         item = connector.getItemIdFromRoom(currentRoom)[0][0]
+         project = connector.getProjectFromRoom(currentRoom)[0][0]
+
 
          if len(rooms) < 3:
             return flask.render_template('begin.html',
                user=user.username,
                room1=rooms[0][0],
                room2=rooms[1][0],
-               text1=rooms[0][1], 
-               text2=rooms[1][1]
+               text=text,
+               room=currentRoom,
+               item=item
                )
          else: 
             return flask.render_template('begin.html',
@@ -109,28 +111,34 @@ def begin():
                room1=rooms[0][0],
                room2=rooms[1][0],
                room3=rooms[2][0],
-               text1=rooms[0][1], 
-               text2=rooms[1][1], 
-               text3=rooms[2][1], 
+               text=text,
+               room=currentRoom,
+               item=item
                )
 
    # on mouse click, get the result & reselect rooms
    if flask.request.method == 'POST':
       if user != None:
-         chosenRoom = int(flask.request.form.get('form'))
+         currentRoom = int(flask.request.form.get('form'))
+         rooms = connector.getRooms(currentRoom)
+         text = connector.roomText(currentRoom)[0][0]
+         item = connector.getItemIdFromRoom(currentRoom)[0][0]
+         project = connector.getProjectFromRoom(currentRoom)[0][0]
 
-         # set roomid as current room
-         rooms = connector.roomText(chosenRoom)
+         # generate random test
+         # rand = random.randint(0, 10)
+         # if rand == 10:
+         #    connector.getTest()
 
-         # add any items that the current room has to current items
 
          if len(rooms) < 3:
             return flask.render_template('begin.html',
                user=user.username,
                room1=rooms[0][0],
                room2=rooms[1][0],
-               text1=rooms[0][1], 
-               text2=rooms[1][1]
+               text=text,
+               room=currentRoom,
+               item=item
                )
          else: 
             return flask.render_template('begin.html',
@@ -138,20 +146,19 @@ def begin():
                room1=rooms[0][0],
                room2=rooms[1][0],
                room3=rooms[2][0],
-               text1=rooms[0][1], 
-               text2=rooms[1][1], 
-               text3=rooms[2][1], 
+               text=text,
+               room=currentRoom,
+               item=item
                )
 
    else:
+      print "This should never happen, ideally."
       return flask.render_template('begin.html')
    
 @app.route('/logout')
 def logout():
    flask_login.logout_user()
-   # eventually, we'll get this to a template.
    return flask.render_template('logout.html')
-
 
 @login_manager.unauthorized_handler
 def unauthorized_handler():

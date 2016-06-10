@@ -5,7 +5,7 @@ from sys import stdin
 #db = MySQLdb.connect(host = "csc-db0", user = "cpew", passwd = "FunToPassHa7", db = "cpew")
 
 # Michelle's local credentials. Modify if running it for yourself!
-db = MySQLdb.connect(host = 'localhost', user = 'root', passwd = 'pass123', db = 'carapew')
+db = MySQLdb.connect(host = 'localhost', user = 'root', passwd = '123', db = 'final')
 
 cur = db.cursor()
 
@@ -137,7 +137,7 @@ def checkObtainedItemExists(userId, itemId):
 		return True
 
 def getProjectMessage(projectId):
-	cur.execute("""SELECT message FROM Projects WHERE projectID = %s""", (projectId,))
+	cur.execute("""SELECT message FROM Projects WHERE id = %s""", (projectId,))
 	return cur.fetchall()
 
 def getHealthFromScore(score):

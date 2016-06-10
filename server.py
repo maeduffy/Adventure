@@ -120,7 +120,7 @@ def begin():
       if user != None:
          health = connector.getHealth(user.userid)[0][0]
 
-         currentRoom = flask.request.form.get('form')
+         currentRoom = flask.request.form.get('form') # error?
          if currentRoom != None:
             currentRoom = int(currentRoom)
          else:
@@ -132,6 +132,7 @@ def begin():
 
          if checkGameComplete() != False:
             text = checkGameComplete()
+            connector.addLeader(user.userid, health)
             return flask.render_template('begin.html',
                user=user.username,
                text=text,
@@ -239,7 +240,7 @@ def begin():
                   break
 
             if allItemsExist:
-               score = randint(0, 10) * 10
+               score = random.randint(0, 10) * 10
                connector.setProjectComplete(user.userid, projectId, score)
                message = connector.getProjectMessage(projectId)[0][0]
 
@@ -349,7 +350,6 @@ def logout():
 
 @app.route('/leaderboard')
 def leaderboard():
-<<<<<<< HEAD
    # load all Characters, scores, health
    entries = connector.getLeaders()
    return flask.render_template('leaderboard.html', entries = entries)

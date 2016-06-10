@@ -70,7 +70,7 @@ INSERT INTO ProjectItems VALUES
 (8, 4, 8);
 
 INSERT INTO Rooms VALUES
-(1, 2, 3, 7, NULL, NULL, 'You have always been good with computers? That is funny. This class will make or break you. After this class, you will no longer be good with computers, you will be a good computer, become one with the machine. In each room, you will have up to 3 choices. You may move to the left, to the right, or backwards. Choose wisely and you will come out victorious, ready for bigger and better (or worse, let’'s be real) things. Good luck!'),
+(1, 2, 3, 7, NULL, NULL, 'You have always been good with computers? That is funny. This class will make or break you. After this class, you will no longer be good with computers, you will be a good computer, become one with the machine. In each room, you will have up to 3 choices. You may move to the left, to the right, or backwards. Choose wisely and you will come out victorious, ready for bigger and better (or worse, let''s be real) things. Good luck!'),
 (2, 1, 10, 14, 7, NULL, 'Suddenly you are teleported to a new planet and land on a piece of metal. As you walk off the sheet of metal you hear a grunt from below you, "Bite my shiny metal ass!" You realize that you found BENDER!!!'),
 (3, 1, 4, 16, NULL, NULL, 'YOU CAN DO IT!'),
 (4, 3, 5, 19, NULL, NULL, 'Real programmers count from 0'),

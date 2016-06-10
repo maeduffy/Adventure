@@ -43,7 +43,7 @@ def signup():
          message=flask.request.args.get('message'))
    
    if flask.request.method == 'POST':
-      name = flask.request.form.get('name')
+      name = str(flask.request.form.get('name'))
       try:
          connector.addCharacter(name)
 
@@ -62,7 +62,7 @@ def login():
          message=flask.request.args.get('message'))
    
    # else, if they are already trying to log in
-   username = flask.request.form['name']
+   username = str(flask.request.form['name'])
    
    try:
       character = connector.charExists(username)
@@ -120,7 +120,7 @@ def begin():
       if user != None:
          health = connector.getHealth(user.userid)[0][0]
 
-         currentRoom = flask.request.form.get('form') # error?
+         currentRoom = flask.request.form.get('form')
          if currentRoom != None:
             currentRoom = int(currentRoom)
          else:
@@ -142,11 +142,11 @@ def begin():
         
          if user.testId != None:
             currentRoom = int(connector.getRoom(user.userid)[0][0])
-            answer1 = flask.request.form.get('f1')
-            answer2 = flask.request.form.get('f2')
-            answer3 = flask.request.form.get('f3')
-            answer4 = flask.request.form.get('f4')
-            answer5 = flask.request.form.get('f5')
+            answer1 = str(flask.request.form.get('f1'))
+            answer2 = str(flask.request.form.get('f2'))
+            answer3 = str(flask.request.form.get('f3'))
+            answer4 = str(flask.request.form.get('f4'))
+            answer5 = str(flask.request.form.get('f5'))
 
             correctAnswer1 = connector.getAnswer(user.testId, 1)[0][0]
             correctAnswer2 = connector.getAnswer(user.testId, 2)[0][0]

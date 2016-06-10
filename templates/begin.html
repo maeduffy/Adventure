@@ -58,7 +58,7 @@
                         <h1>Hey {{ user }}, you're currently in room {{ room }}.</h1>
                         <p class="intro">{{ text }}
                         <br>{% if item %}{{ item }}{% endif %}
-                            {% if project %}{{ project }} You got a score of {{ score }}{% endif %}
+                            {% if project %}{{ project }} You got a score of {{ score }}!{% endif %}
                             {% if test %}Surprise Test! You're now taking the {{ test }}.<br><br>
                                 <form action="/begin" method="POST">
                                 <font size="3" color=#FF758C>

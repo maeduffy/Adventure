@@ -119,14 +119,12 @@ def begin():
          text = connector.roomText(currentRoom)[0][0]
         
          itemId = connector.getItemIdFromRoom(currentRoom)[0][0]
-         item = connector.getItemDesc(itemId)[0][0]
-         # need connector here to confirm whether itemId already exists for user
-         connector.addCurrentItem(user.userid, itemId)
 
-         print
-         print item
-         print
-         if item != "nothing":
+         if itemId != None:
+            item = connector.getItemDesc(itemId)[0][0]
+            # need connector here to confirm whether itemId already exists for user
+            connector.addCurrentItem(user.userid, itemId)
+
             if len(rooms) < 3:
                return flask.render_template('begin.html',
                   user=user.username,
@@ -147,18 +145,50 @@ def begin():
                   item=item
                   )
 
-         # non-existent projects are NULL (rn 0)
-         # project = connector.getProjectFromRoom(currentRoom)[0][0]
-         # if project is not NULL and we haven't finished it yet
-         # check 2-3 items from project, if we have it for not
-         # if all items are had, we complete it
-         # generate a random score and mark project as complete
+         projectId = connector.getProjectFromRoom(currentRoom)[0][0]
+         if projectId != None and connector.checkProjectComplete(user.userid, projectId)[0][0] != None:
+            projectItems = connector.projectItems(projectId)
 
-         # generate random test, only on non-project and non-item pages
-         # rand = random.randint(0, 10)
-         # if rand == 10:
-         #    connector.getTest()
-         # ask cara on this
+            allItemsExist = True
+            for pItem in projectItems:
+               pItem = pItem[0]
+               if connector.checkCurrentItemExists(pItem) == False:
+                  allItemsExist = False
+                  break
+
+            if allItemsExist:
+               connector.setProjectComplete(char, project, randint(0, 100))
+               message = connector.getProjectMessage(projectId)[0][0]
+
+               if len(rooms) < 3:
+                  return flask.render_template('begin.html',
+                     user=user.username,
+                     room1=rooms[0][0],
+                     room2=rooms[1][0],
+                     text=text,
+                     room=currentRoom,
+                     project=message
+                     )
+               else: 
+                  return flask.render_template('begin.html',
+                     user=user.username,
+                     room1=rooms[0][0],
+                     room2=rooms[1][0],
+                     room3=rooms[2][0],
+                     text=text,
+                     room=currentRoom,
+                     project=message
+                     )
+
+         # generate random test
+         else:
+            status = connector.nextTest()
+            # all tests are completed if status is False
+            # if status != False:
+               # rand = random.randint(0, 10)
+               # if rand == 10:
+
+               # I guess we'd probably load some new HTML page to represent a test
 
          if len(rooms) < 3:
             return flask.render_template('begin.html',

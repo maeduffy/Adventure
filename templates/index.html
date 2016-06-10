@@ -38,8 +38,6 @@
                                 <li><a href="#download">Download</a></li>
                             </ul> -->
                             <ul class="member-actions">
-                                <!-- <li><a href="#download" class="login">Log in</a></li>
-                                <li><a href="#download" class="btn-white btn-small">Sign up</a></li> -->
                                 {% if user %}
                                    <li> <a href="/begin" class="btn-white btn-small"> Begin Adventure </a> </li>
                                    <li> <a href="/logout"> Logout </a> </li>
@@ -76,6 +74,19 @@
         </div>
         <div class="down-arrow floating-arrow"><a href="#"><i class="fa fa-angle-down"></i></a></div>
     </section>
+
+    <section class="features-extra section-padding" id="assets">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="feature-list">
+                        <h3>Visit the Leaderboard below!</h3>
+                        <a href="/leaderboard" class="btn btn-ghost btn-accent btn-small">Leaderboard</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
  
     <footer>
         <div class="container">
@@ -103,14 +114,14 @@
         </div>
     </footer>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
-    <script src="bower_components/retina.js/dist/retina.js"></script>
-    <script src="js/jquery.fancybox.pack.js"></script>
-    <script src="js/vendor/bootstrap.min.js"></script>
-    <script src="js/scripts.js"></script>
-    <script src="js/jquery.flexslider-min.js"></script>
-    <script src="bower_components/classie/classie.js"></script>
-    <script src="bower_components/jquery-waypoints/lib/jquery.waypoints.min.js"></script>
+    <script>window.jQuery || document.write('<script src="static/vendor/jquery-1.11.2.min.js"><\/script>')</script>
+    <script src="static/bower_components/retina.js/dist/retina.js"></script>
+    <script src="static/jquery.fancybox.pack.js"></script>
+    <script src="static/vendor/bootstrap.min.js"></script>
+    <script src="static/scripts.js"></script>
+    <script src="static/jquery.flexslider-min.js"></script>
+    <script src="static/bower_components/classie/classie.js"></script>
+    <script src="static/bower_components/jquery-waypoints/lib/jquery.waypoints.min.js"></script>
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
     <script>
     (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=

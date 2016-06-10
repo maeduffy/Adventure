@@ -31,12 +31,12 @@
                     <div class="logo"><a href="../"><img src="http://users.csc.calpoly.edu/~dekhtyar/cal_poly_logo.gif" alt="Logo"></a></div>
                     <div class="header-nav">
                         <nav>
-                            <ul class="primary-nav">
+                            <!-- <ul class="primary-nav">
                                 <li><a href="#features">Features</a></li>
                                 <li><a href="#assets">Assets</a></li>
                                 <li><a href="#blog">Blog</a></li>
                                 <li><a href="#download">Download</a></li>
-                            </ul>
+                            </ul> -->
                             <ul class="member-actions">
                                 {% if user %}
                                    <li> <a href="/begin" class="btn-white btn-small"> Begin Adventure </a> </li>
@@ -45,7 +45,6 @@
                                    <li> <a href="/login?uri=/" class="login"> Login </a> </li>
                                    <li> <a href="/signup" class="btn-white btn-small"> Sign Up </a> </li>
                                 {% endif %}
-
                             </ul>
                         </nav>
                     </div>
@@ -59,7 +58,7 @@
             <div class="row">
                 <div class="col-md-10 col-md-offset-1">
                     <div class="hero-content text-center">
-                        <h1>You are logged in!</h1>
+                        <h1>Log into Adventure, below.</h1>
                         <p class="intro">Ever wanted to know what it's like being in 357? Need to relive a few memorable occasions? You're at the right spot.</p>
                         <!-- {% if user %}
                             <a href="/begin" class="btn btn-fill btn-large btn-margin-right">Begin Adventure</a>
@@ -343,14 +342,14 @@
         </div>
     </footer>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
-    <script src="bower_components/retina.js/dist/retina.js"></script>
-    <script src="js/jquery.fancybox.pack.js"></script>
-    <script src="js/vendor/bootstrap.min.js"></script>
-    <script src="js/scripts.js"></script>
-    <script src="js/jquery.flexslider-min.js"></script>
-    <script src="bower_components/classie/classie.js"></script>
-    <script src="bower_components/jquery-waypoints/lib/jquery.waypoints.min.js"></script>
+    <script>window.jQuery || document.write('<script src="static/vendor/jquery-1.11.2.min.js"><\/script>')</script>
+    <script src="static/bower_components/retina.js/dist/retina.js"></script>
+    <script src="static/jquery.fancybox.pack.js"></script>
+    <script src="static/vendor/bootstrap.min.js"></script>
+    <script src="static/scripts.js"></script>
+    <script src="static/jquery.flexslider-min.js"></script>
+    <script src="static/bower_components/classie/classie.js"></script>
+    <script src="static/bower_components/jquery-waypoints/lib/jquery.waypoints.min.js"></script>
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
     <script>
     (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=

@@ -217,6 +217,11 @@ def logout():
    flask_login.logout_user()
    return flask.render_template('logout.html')
 
+@app.route('/leaderboard')
+def leaderboard():
+   # load all Characters, scores, health
+   return flask.render_template('leaderboard.html')
+
 @login_manager.unauthorized_handler
 def unauthorized_handler():
    return 'Unauthorized to access.'

@@ -61,13 +61,21 @@
                             {% if project %}{{ project }} You got a score of {{ score }}{% endif %}
                             {% if test %}Surprise Test! You're now taking the {{ test }}.<br><br>
                                 <form action="/begin" method="POST">
-                                1. {{ q1 }} <br><input type="f1" name="f1"><br>
-                                2. {{ q2 }} <br><input type="f2" name="f2"><br>
-                                3. {{ q3 }} <br><input type="f3" name="f3"><br>
-                                4. {{ q4 }} <br><input type="f4" name="f4"><br>
-                                5. {{ q5 }} <br><input type="f5" name="f5"><br>
+                                <font size="3" color=#FF758C>
+                                <p align="left"> 
+                                1. {{ q1 }}
+                                <br><input type="text" name="f1"><br>
+                                2. {{ q2 }}
+                                <br><input type="text" name="f2"><br>
+                                3. {{ q3 }} 
+                                <br><input type="text" name="f3"><br>
+                                4. {{ q4 }} 
+                                <br><input type="text" name="f4"><br>
+                                5. {{ q5 }} 
+                                <br><input type="text" name="f5"><br><br></font>
                                   <input type="submit" value="Submit">
                                 </form>
+                                </p>
                             {% endif %}
                             {% if a1 %}
                                 You received a score of {{ score }}.<br>

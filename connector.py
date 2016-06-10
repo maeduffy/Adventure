@@ -91,7 +91,7 @@ def changeHealth(percentChange, charID):
 	elif health > 100:
 		health = 100
 
-	cur.execute("""UPDATE Characters SET health = health + %s WHERE id = %s""", (percentChange, charID))
+	cur.execute("""UPDATE Characters SET health = %s WHERE id = %s""", (health, charID))
 	db.commit()
 
 def healthMeaning(health):

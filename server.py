@@ -82,7 +82,6 @@ def login():
 def index():
    if user != None and user.is_authenticated():
       return flask.render_template('index.html', user=user.username)
-
    else:
       return flask.render_template('index.html')
       
@@ -92,12 +91,10 @@ def begin():
    if flask.request.method == 'GET':
       if user != None:
          health = connector.getHealth(user.userid)[0][0]
-         print "GET, preany", health
          currentRoom = int(connector.getRoom(user.userid)[0][0])
          rooms = connector.getRooms(currentRoom)
          text = connector.roomText(currentRoom)[0][0]
 
-         print "GET, postany", health
          if len(rooms) < 3:
             return flask.render_template('begin.html',
                user=user.username,
@@ -123,22 +120,38 @@ def begin():
       if user != None:
          health = connector.getHealth(user.userid)[0][0]
 
-         currentRoom = int(flask.request.form.get('form'))
+         currentRoom = flask.request.form.get('form')
+         if currentRoom != None:
+            currentRoom = int(currentRoom)
+         else:
+            currentRoom = int(connector.getRoom(user.userid)[0][0])
+
+         connector.setRoom(user.userid, currentRoom)
          rooms = connector.getRooms(currentRoom)
          text = connector.roomText(currentRoom)[0][0]
+
+         if checkGameComplete() != False:
+            text = checkGameComplete()
+            return flask.render_template('begin.html',
+               user=user.username,
+               text=text,
+               room=currentRoom,
+               health=health
+               )
         
          if user.testId != None:
+            currentRoom = int(connector.getRoom(user.userid)[0][0])
             answer1 = flask.request.form.get('f1')
             answer2 = flask.request.form.get('f2')
             answer3 = flask.request.form.get('f3')
             answer4 = flask.request.form.get('f4')
             answer5 = flask.request.form.get('f5')
 
-            correctAnswer1 = connector.getAnswer(user.testId, 1)
-            correctAnswer2 = connector.getAnswer(user.testId, 2)
-            correctAnswer3 = connector.getAnswer(user.testId, 3)
-            correctAnswer4 = connector.getAnswer(user.testId, 4)
-            correctAnswer5 = connector.getAnswer(user.testId, 5)
+            correctAnswer1 = connector.getAnswer(user.testId, 1)[0][0]
+            correctAnswer2 = connector.getAnswer(user.testId, 2)[0][0]
+            correctAnswer3 = connector.getAnswer(user.testId, 3)[0][0]
+            correctAnswer4 = connector.getAnswer(user.testId, 4)[0][0]
+            correctAnswer5 = connector.getAnswer(user.testId, 5)[0][0]
 
             studentAnswers = (answer1, answer2, answer3, answer4, answer5)
             testAnswers = (correctAnswer1, correctAnswer2, correctAnswer3,
@@ -151,8 +164,6 @@ def begin():
             affectedHealth = connector.getHealthFromScore(score)[0][0]
             connector.changeHealth(affectedHealth, user.userid)
 
-            print "Took a test."
-            print "POST, postany:", health
             if len(rooms) < 3:
                return flask.render_template('begin.html',
                   user=user.username,
@@ -193,8 +204,6 @@ def begin():
 
                item = connector.getItemDesc(itemId)[0][0]
 
-               print "Got item"
-               print "POST, postany:", health
                if len(rooms) < 3:
                   return flask.render_template('begin.html',
                      user=user.username,
@@ -236,8 +245,6 @@ def begin():
                affectedHealth = connector.getHealthFromScore(score)[0][0]
                connector.changeHealth(affectedHealth, user.userid)
 
-               print "Project"
-               print "POST, postany:", health
                if len(rooms) < 3:
                   return flask.render_template('begin.html',
                      user=user.username,
@@ -278,8 +285,6 @@ def begin():
                   question4 = connector.getQuestion(testId, 4)[0][0]
                   question5 = connector.getQuestion(testId, 5)[0][0]
 
-                  print "Taking test, no change should occur"
-                  print "POST, postany:", health
                   if len(rooms) < 3:
                      return flask.render_template('begin.html',
                         user=user.username,
@@ -343,6 +348,7 @@ def logout():
 
 @app.route('/leaderboard')
 def leaderboard():
+<<<<<<< HEAD
    # load all Characters, scores, health
    entries = connector.getLeaders()
    return flask.render_template('leaderboard.html', entries = entries)
@@ -360,10 +366,21 @@ def compareAnswers(studentAnswers, testAnswers):
    score = 0
 
    for i in range(len(studentAnswers)):
-      if studentAnswers[i] == testAnswers:
+      # print studentAnswers[i], testAnswers[i]
+      if studentAnswers[i] == testAnswers[i]:
          score += 20
 
    return score
+
+def checkGameComplete():
+   health = connector.getHealth(user.userid)
+   if health == 0:
+      return "You died! Game over."
+   elif connector.nextTest(user.userid) == False and \
+      connector.nextProject(user.userid) == False:
+      return "You've finished the game! You passed CPE 357! Onwards to the next class..."
+   else:
+      return False
 
 @login_manager.request_loader
 def request_loader(request):

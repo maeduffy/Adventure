@@ -85,7 +85,13 @@ def getAnswer(testID, questionID):
 
 #Please pass in negative number if health is decreasing
 def changeHealth(percentChange, charID):
-	cur.execute("""UPDATE Characters SET health = health + %s WHERE id = %s""", (percentChange, charID))
+	health = getHealth(charID)[0][0] + percentChange
+	if health < 0:
+		health = 0
+	elif health > 100:
+		health = 100
+
+	cur.execute("""UPDATE Characters SET health = %s WHERE id = %s""", (health, charID))
 	db.commit()
 
 def healthMeaning(health):
@@ -106,6 +112,17 @@ def nextTest(charId):
 		return False
 	else:
 		return testCount - (testCount - completeCount) + 1
+
+
+def nextProject(charId):
+	cur.execute("""SELECT COUNT(*) FROM CompletedProjects WHERE charID = %s""", (charId,))
+	completeCount = cur.fetchall()[0][0]
+	cur.execute("""SELECT COUNT(*) FROM Projects""")
+	projectCount = cur.fetchall()[0][0]
+	if completeCount == projectCount:
+		return False
+	else:
+		return projectCount - (projectCount - completeCount) + 1
 
 def projectItems(projectId):
 	cur.execute("""SELECT itemID FROM ProjectItems WHERE projectID = %s""", (projectId,))
